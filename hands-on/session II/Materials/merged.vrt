@@ -17,7 +17,7 @@ def average(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,raster_ysize, 
     <NoDataValue>-9999</NoDataValue>
     <ColorInterp>Gray</ColorInterp>
     <ComplexSource>
-      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/aspect_tiles/tile_0000.tif</SourceFilename>
+      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/slope_tiles/tile_0000.tif</SourceFilename>
       <SourceBand>1</SourceBand>
       <SourceProperties RasterXSize="14545" RasterYSize="18517" DataType="Float32" BlockXSize="256" BlockYSize="256" />
       <SrcRect xOff="0" yOff="0" xSize="14545" ySize="18517" />
@@ -25,7 +25,7 @@ def average(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,raster_ysize, 
       <NODATA>-9999</NODATA>
     </ComplexSource>
     <ComplexSource>
-      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/aspect_tiles/tile_0001.tif</SourceFilename>
+      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/slope_tiles/tile_0001.tif</SourceFilename>
       <SourceBand>1</SourceBand>
       <SourceProperties RasterXSize="14534" RasterYSize="18517" DataType="Float32" BlockXSize="256" BlockYSize="256" />
       <SrcRect xOff="0" yOff="0" xSize="14534" ySize="18517" />
@@ -33,7 +33,7 @@ def average(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,raster_ysize, 
       <NODATA>-9999</NODATA>
     </ComplexSource>
     <ComplexSource>
-      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/aspect_tiles/tile_0002.tif</SourceFilename>
+      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/slope_tiles/tile_0002.tif</SourceFilename>
       <SourceBand>1</SourceBand>
       <SourceProperties RasterXSize="14545" RasterYSize="18507" DataType="Float32" BlockXSize="256" BlockYSize="256" />
       <SrcRect xOff="0" yOff="0" xSize="14545" ySize="18507" />
@@ -41,7 +41,7 @@ def average(in_ar, out_ar, xoff, yoff, xsize, ysize, raster_xsize,raster_ysize, 
       <NODATA>-9999</NODATA>
     </ComplexSource>
     <ComplexSource>
-      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/aspect_tiles/tile_0003.tif</SourceFilename>
+      <SourceFilename relativeToVRT="0">./Materials/files/tif_files/slope_tiles/tile_0003.tif</SourceFilename>
       <SourceBand>1</SourceBand>
       <SourceProperties RasterXSize="14534" RasterYSize="18507" DataType="Float32" BlockXSize="256" BlockYSize="256" />
       <SrcRect xOff="0" yOff="0" xSize="14534" ySize="18507" />
