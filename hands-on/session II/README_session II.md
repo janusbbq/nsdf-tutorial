@@ -44,18 +44,525 @@ You can download the introductory slides [here](https://drive.google.com/file/d/
 
 ---
 
+## Directory Structure
+
+This section provides a detailed overview of the session II directory organization and the purpose of each component.
+
+```
+session II/
+├── 1.Tutorial.ipynb                 # Main tutorial notebook - START HERE
+├── 2.Explore_Data.ipynb             # Data exploration and visualization notebook
+├── README_session II.md              # This file
+└── Materials/                        # Contains all resources and dependencies
+    ├── Dockerfile                   # Docker container specification
+    ├── docker-compose.yml           # Docker Compose configuration for multi-container setup
+    ├── environment.yml              # Conda environment specification with all dependencies
+    ├── build_jetstream_environment.sh# Script for setting up Jetstream2 environment
+    ├── setup_openvisuspy.sh          # Script to configure OpenVisuspy
+    ├── download_urls.txt            # URLs for data download
+    ├── merged.vrt                   # Virtual raster file for GIS data
+    ├── jetstream2_manual.pdf        # Manual for Jetstream2 setup
+    │
+    ├── files/                       # Data files and resources
+    │   ├── docs/                    # Documentation images and assets
+    │   │   ├── Logos.png
+    │   │   ├── arq.png              # Architecture diagram
+    │   │   ├── codespaces.png
+    │   │   ├── Creating_container.png
+    │   │   ├── tutorial.png
+    │   │   ├── vscode.png
+    │   │   ├── workflow-diagram.png
+    │   │   └── Openvisus-somospie.png
+    │   ├── json/
+    │   │   └── dataverse.json       # Metadata file
+    │   ├── shape_files/             # GIS shapefile data (Tennessee state boundary)
+    │   │   ├── STATEFP_47.shp       # Shapefile geometry
+    │   │   ├── STATEFP_47.shx       # Shapefile index
+    │   │   ├── STATEFP_47.dbf       # Attribute database
+    │   │   └── STATEFP_47.prj       # Projection information
+    │   └── tif_files/               # GeoTIFF raster files (terrain data)
+    │       ├── elevation.tif        # Digital elevation model
+    │       ├── aspect.tif           # Terrain aspect data
+    │       ├── slope.tif            # Slope calculations
+    │       ├── hillshading.tif      # Hillshade visualization
+    │       ├── pcs.tif              # Projected coordinate system raster
+    │       ├── temp_combined.*      # Combined temporary raster files
+    │       └── gcs.tif.aux.xml      # GeoTIFF auxiliary metadata
+    │
+    ├── GEOtiled/                    # GEOtiled module for terrain analysis
+    │   ├── README.md                # GEOtiled documentation
+    │   ├── geotiled/                # Main GEOtiled package
+    │   │   ├── LICENSE
+    │   │   ├── pyproject.toml       # Python project configuration
+    │   │   ├── setup.cfg            # Setup configuration
+    │   │   ├── README.md
+    │   │   └── src/
+    │   │       ├── __init__.py
+    │   │       ├── geotiled.py      # Core GEOtiled implementation
+    │   │       └── geotiled.egg-info/
+    │   ├── demo/                    # Demo files and examples
+    │   │   ├── demo.ipynb           # GEOtiled demonstration notebook
+    │   │   └── demo_images/
+    │   │       └── workflow.png     # Workflow diagram
+    │   └── docs/                    # Sphinx documentation
+    │       ├── Makefile             # Documentation build
+    │       ├── make.bat
+    │       └── source/
+    │           ├── conf.py          # Sphinx configuration
+    │           └── index.rst        # Documentation index
+    │
+    ├── idx_data/                    # Indexed terrain data (VISUS format)
+    │   ├── Tennessee_terrain_parameters.idx # Index file for streaming data
+    │   └── Tennessee_terrain_parameters/
+    │       └── 0/
+    │           ├── aspect/          # Aspect index tiles
+    │           ├── elevation/       # Elevation index tiles
+    │           ├── hillshading/     # Hillshading index tiles
+    │           └── slope/           # Slope index tiles
+    │
+    └── openvisuspy/                 # OpenVisuspy dashboard framework
+        ├── README.md                # OpenVisuspy documentation
+        ├── LICENSE
+        ├── pyproject.toml           # Python project configuration
+        ├── TODO.md                  # Development tasks
+        ├── openvisus.env            # Environment configuration
+        ├── diagram.drawio           # Architecture diagram
+        ├── favicon.ico
+        │
+        ├── data/                    # Sample datasets
+        │   └── ironProt.vtk         # VTK format sample data
+        │
+        ├── examples/                # Usage examples
+        │   ├── create_streamable/   # Examples for creating streamable data
+        │   │   ├── create_streamable.py
+        │   │   ├── xarray_backend.py
+        │   │   ├── diagram.drawio
+        │   │   ├── run.ipynb        # Executable example
+        │   │   └── ReadMe.md
+        │   ├── experimental/        # Experimental examples
+        │   │   ├── jupyterlite-example.ipynb
+        │   │   ├── README.md
+        │   │   ├── server.py
+        │   │   ├── 2kbit1.html
+        │   │   ├── chess_zip.html
+        │   │   ├── david_subsampled.html
+        │   │   └── index.html
+        │   ├── notebooks/           # Jupyter notebook examples
+        │   │   ├── ov-dashboards.ipynb
+        │   │   ├── ov-retina-rabbit-matplot.ipynb
+        │   │   ├── ov-signal.ipynb
+        │   │   ├── ov-vr.ipynb
+        │   │   ├── test-bokeh.ipynb
+        │   │   ├── test-ipywidgets.ipynb
+        │   │   ├── test-matplotlib.ipynb
+        │   │   ├── test-panel.ipynb
+        │   │   └── test-pyvista.ipynb
+        │   └── python/              # Python script examples
+        │       ├── test-pyvista.py
+        │       └── test-vtkvolume.py
+        │
+        ├── scripts/                 # Utility scripts
+        │   ├── new_tag.py           # Version tagging script
+        │   ├── new_tag.sh
+        │   └── run_command.py
+        │
+        └── src/openvisuspy/         # OpenVisuspy source code
+            ├── __init__.py
+            ├── backend.py           # Backend abstraction
+            ├── backend_cpp.py       # C++ backend
+            ├── backend_py.py        # Python backend
+            ├── dashboards/          # Dashboard components
+            ├── probe.py             # Data probing utilities
+            ├── slice.py             # Slicing utilities
+            └── utils.py             # Utility functions
+```
+
+### Key Components Overview
+
+| Component | Purpose |
+|-----------|---------|
+| **1.Tutorial.ipynb** | Main interactive tutorial for NSDF workflow |
+| **2.Explore_Data.ipynb** | Data exploration and visualization exercises |
+| **GEOtiled** | Terrain data processing and analysis module |
+| **OpenVisuspy** | Dashboard and data streaming visualization framework |
+| **idx_data** | Pre-indexed terrain data for efficient streaming access |
+| **files** | GIS data (shapefiles, GeoTIFFs) and documentation images |
+
+### Quick File Reference
+
+- **Notebooks**: Start with `1.Tutorial.ipynb`, then proceed to `2.Explore_Data.ipynb`
+- **Configuration**: `environment.yml` (dependencies), `docker-compose.yml` (containerization)
+- **GIS Data**: Shapefiles in `files/shape_files/`, rasters in `files/tif_files/`
+- **Documentation**: View `Materials/GEOtiled/README.md` and `Materials/openvisuspy/README.md`
+
+---
+
+## Learning Objectives & Key Concepts
+
+### Notebook-by-Notebook Breakdown
+
+#### **1.Tutorial.ipynb** - Main Workflow
+**Topics Covered:**
+- Data retrieval from USGS sources using GEOtiled
+- Terrain parameter computation (elevation, slope, aspect, hillshading)
+- Processing digital elevation models (DEMs) at scale
+- NSDF service integration for data management
+- Multi-platform storage (public and private)
+
+**Key Functions:**
+- `GEOtiled.download_dem()` - Retrieve elevation data
+- `GEOtiled.compute_terrain_parameters()` - Calculate terrain attributes
+- Data upload/download workflows
+
+**Prerequisites:** Basic Python knowledge, familiarity with geospatial concepts
+**Expected Runtime:** 30-45 minutes
+**Output:** Processed terrain datasets in GeoTIFF format
+
+#### **2.Explore_Data.ipynb** - Analysis & Visualization
+**Topics Covered:**
+- Loading and exploring terrain raster data
+- Visualization using OpenVisuspy dashboards
+- Statistical analysis of terrain parameters
+- Interactive data exploration
+- Subsetting and filtering spatial data
+
+**Key Functions:**
+- `rasterio.open()` - Load GeoTIFF files
+- `xarray.DataArray` - Multidimensional data handling
+- OpenVisuspy dashboard rendering
+
+**Prerequisites:** Completion of Tutorial.ipynb
+**Expected Runtime:** 20-30 minutes
+**Output:** Visualizations, statistical summaries, interactive dashboards
+
+### Core Concepts
+- **DEM (Digital Elevation Model)**: Raster representation of terrain elevation
+- **Terrain Parameters**: Derived attributes (slope, aspect, curvature, hillshade)
+- **GeoTIFF**: Georeferenced image format preserving coordinate information
+- **Shapefile**: Vector data format for geographic boundaries
+- **VISUS Indexing**: Hierarchical streaming format for efficient data access
+
+---
+
+## Dependencies & Requirements
+
+### Key Python Packages
+
+| Package | Version | Purpose | Documentation |
+|---------|---------|---------|----------------|
+| **GEOtiled** | Latest | Terrain data processing and analysis | [GitHub](https://github.com/TauferLab/GEOtiled) |
+| **rasterio** | ≥1.3.0 | Read/write GIS raster data (GeoTIFF) | [Docs](https://rasterio.readthedocs.io/) |
+| **geopandas** | ≥0.11.0 | Geospatial vector data (shapefiles) | [Docs](https://geopandas.org/) |
+| **xarray** | ≥2022.0 | Multidimensional array operations | [Docs](http://xarray.pydata.org/) |
+| **OpenVisuspy** | Latest | Interactive dashboard visualization | [GitHub](https://github.com/sci-visus/openvisuspy) |
+| **numpy** | ≥1.20.0 | Numerical computing and array operations | [Docs](https://numpy.org/doc/) |
+| **pandas** | ≥1.3.0 | Data manipulation and analysis | [Docs](https://pandas.pydata.org/) |
+| **matplotlib** | ≥3.5.0 | Static data visualization | [Docs](https://matplotlib.org/) |
+| **GDAL** | ≥3.0 | Geospatial data abstraction | [Docs](https://gdal.org/) |
+| **Jupyter** | ≥1.0 | Interactive notebooks | [Docs](https://jupyter.org/) |
+
+### System Requirements
+- **RAM**: 8 GB minimum (16 GB recommended for large datasets)
+- **Disk Space**: 5 GB for tutorial materials + datasets
+- **Python**: 3.10 (as specified in environment.yml)
+
+---
+
+## Quick Start Code Snippets
+
+### Loading GeoTIFF Terrain Data
+```python
+import rasterio
+from rasterio.plot import show
+import numpy as np
+
+# Load elevation data
+with rasterio.open('Materials/files/tif_files/elevation.tif') as src:
+    elevation = src.read(1)  # Read first band
+    profile = src.profile  # Get metadata
+    print(f"Shape: {elevation.shape}")
+    print(f"CRS: {src.crs}")
+    print(f"Bounds: {src.bounds}")
+```
+
+### Working with Shapefiles
+```python
+import geopandas as gpd
+
+# Load state boundary
+shapefile = gpd.read_file('Materials/files/shape_files/STATEFP_47.shp')
+print(shapefile.crs)  # Projection info
+print(shapefile.bounds)  # Geographic extent
+```
+
+### Statistical Analysis of Terrain
+```python
+import numpy as np
+
+# Calculate terrain statistics
+slope_data = elevation[~np.isnan(elevation)]
+stats = {
+    'mean': np.mean(slope_data),
+    'std': np.std(slope_data),
+    'min': np.min(slope_data),
+    'max': np.max(slope_data),
+    'median': np.median(slope_data)
+}
+print(stats)
+```
+
+### Creating xarray DataArray from GeoTIFF
+```python
+import xarray as xr
+import rasterio
+
+with rasterio.open('Materials/files/tif_files/elevation.tif') as src:
+    data = src.read()
+    transform = src.transform
+    
+# Create xarray with coordinates
+da = xr.DataArray(
+    data[0],
+    dims=['y', 'x'],
+    coords={
+        'y': np.arange(data.shape[1]),
+        'x': np.arange(data.shape[2])
+    }
+)
+```
+
+---
+
+## Data Format Guide
+
+### GeoTIFF Format Specifications
+- **Channels**: Single-band (grayscale) for elevation, slope, aspect
+- **Data Type**: Float32 (32-bit floating point)
+- **Projection**: Project Coordinate System (PCS) for accurate measurements
+- **Resolution**: ~30 meters per pixel (adjustable)
+- **Spatial Extent**: Tennessee state boundary
+- **Metadata**: Includes CRS, geotransform, and coordinate reference system
+
+**Access Example**: `src.read(1)` returns 2D numpy array
+
+### Shapefile Structure
+- **Geometry**: Polygon boundaries (Tennessee state)
+- **Attributes**: FIPS codes, state identifiers
+- **Files Required**: `.shp` (geometry), `.shx` (index), `.dbf` (attributes), `.prj` (projection)
+
+### VISUS Index Format (.idx)
+- **Hierarchical Structure**: Multiresolution tiled pyramid
+- **Performance**: Enables fast data streaming without loading entire dataset
+- **Structure**: `Tennessee_terrain_parameters/0/{aspect,elevation,hillshading,slope}/`
+- **Use Case**: Efficient dashboard visualization with interactive zooming
+
+### xarray Data Structure
+```
+Dataset with dimensions: (time, y, x) or (Band, y, x)
+Contains coordinates for spatial and temporal indexing
+Supports lazy evaluation and chunked processing
+```
+
+---
+
+## API & Integration References
+
+### GEOtiled Core Functions
+```python
+# Download DEM data
+GEOtiled.download_dem(
+    bbox=(west, south, east, north),
+    resolution=30,
+    output_dir='./'
+)
+
+# Compute terrain parameters
+GEOtiled.compute_parameters(
+    dem_file='./elevation.tif',
+    parameters=['slope', 'aspect', 'hillshading'],
+    output_dir='./'
+)
+```
+
+### OpenVisuspy Dashboard Components
+```python
+from openvisuspy import Dashboard
+
+dashboard = Dashboard(
+    data_path='Materials/idx_data/Tennessee_terrain_parameters',
+    port=8989,
+    resolution='multiresolution'
+)
+```
+
+### xarray Common Operations
+```python
+# Load from GeoTIFF
+da = xr.open_rasterio('elevation.tif')
+
+# Slicing and subsetting
+subset = da.isel(x=slice(100, 200), y=slice(100, 200))
+
+# Resampling
+resampled = da.coarsen(x=2, y=2).mean()
+
+# Statistical operations
+mean_val = da.mean()
+std_val = da.std()
+```
+
+---
+
+## Configuration & Customization
+
+### GEOtiled Parameters
+- **Resolution (meters)**: Adjust DEM resolution (30, 90, 250)
+- **Bounding Box**: Specify geographic area of interest
+- **Terrain Parameters**: Select subset of slope, aspect, curvature, hillshading
+- **Output Format**: GeoTIFF, NetCDF, or other formats
+
+### OpenVisuspy Configuration
+**File**: `Materials/openvisuspy/openvisus.env`
+```
+VISUS_OUTPUT_DIR=./idx_data
+VISUS_STREAMING_ENABLED=true
+VISUS_CACHE_SIZE=512MB
+```
+
+### Performance Tuning
+- **Reduce Resolution**: Lower resolution = faster processing, less memory
+- **Subset Data**: Process only regions of interest
+- **Enable Caching**: Cache computed terrain parameters
+
+---
+
+## Common Issues & Troubleshooting
+
+### Memory Issues
+**Problem**: "MemoryError when loading large GeoTIFF files"
+**Solution**: 
+```python
+# Use windowed reading
+with rasterio.open('large_file.tif') as src:
+    window = rasterio.windows.Window(0, 0, 512, 512)
+    data = src.read(1, window=window)
+```
+
+### Port Conflicts
+**Problem**: Port 8989 already in use
+**Solution**: Change port in `docker-compose.yml` or environment configuration
+```yaml
+environment:
+  VISUS_PORT: 9999
+```
+
+### CRS Mismatches
+**Problem**: Different projections between files
+**Solution**: Reproject to common CRS
+```python
+reprojected = gpd.read_file('shapefile.shp').to_crs('EPSG:4326')
+```
+
+### Slow Dashboard Loading
+**Problem**: Dashboard takes too long to render
+**Solution**: Use lower resolution or pre-computed VISUS indices
+
+---
+
+## Real-World Use Cases
+
+### 1. **Climate & Environmental Monitoring**
+Apply to analyze elevation changes, land subsidence, or glacier retreat monitoring using time-series DEM data.
+
+### 2. **Disaster Response & Risk Assessment**
+Use for flood modeling, landslide susceptibility analysis, or post-disaster terrain change detection.
+
+### 3. **Urban Planning & Infrastructure**
+Analyze slope stability for construction projects, viewshed analysis, or optimal wind turbine placement.
+
+### 4. **Agriculture & Land Management**
+Optimize irrigation patterns based on slope, assess erosion risk, or plan forestry operations.
+
+### 5. **Mining & Geological Analysis**
+Characterize terrain for resource identification or pit design optimization.
+
+---
+
+## Integration with AI/ML Tools
+
+### TensorFlow/Deep Learning
+```python
+import tensorflow as tf
+
+# Convert terrain data to tensor
+terrain_tensor = tf.convert_to_tensor(elevation, dtype=tf.float32)
+
+# Build model to predict slope from elevation
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, 3, activation='relu', input_shape=(512, 512, 1)),
+    tf.keras.layers.MaxPooling2D(2),
+    tf.keras.layers.Dense(1)
+])
+```
+
+### Scikit-learn for Classification
+```python
+from sklearn.cluster import KMeans
+import numpy as np
+
+# Cluster terrain types based on elevation and slope
+X = np.column_stack([elevation.ravel(), slope.ravel()])
+kmeans = KMeans(n_clusters=5).fit(X)
+labels = kmeans.labels_.reshape(elevation.shape)
+```
+
+### GeoPandas for Spatial Analysis
+```python
+import geopandas as gpd
+
+# Spatial join: find which cells intersect state boundary
+gdf_cells = gpd.GeoDataFrame(geometry=gpd.points_from_xy(x, y))
+gdf_state = gpd.read_file('STATEFP_47.shp')
+intersecting = gpd.sjoin(gdf_cells, gdf_state, how='inner')
+```
+
+### Dask for Distributed Computing
+```python
+import dask.array as da
+
+# Process large arrays in parallel chunks
+data_dask = da.from_delayed(
+    delayed_load_tif(),
+    shape=(10000, 10000),
+    dtype=np.float32
+)
+result = data_dask.mean().compute()
+```
+
+---
+
 ## Table of contents
 
-1. [Running the Tutorial](#running-the-tutorial)
-2. [Option 1: GitHub Codespaces (Recommended)](#option-1-GitHub-codespaces-recommended)
-3. [Option 2: Docker](#0ption-2-docker)
-4. [Option 3: Jetstream2](#option-3-jetstream2)
-5. [APPENDIX: Prerequities for Docker](#appendix-prerequities-for-docker)
-6. [Community and Resources](#community-and-resources)
-7. [Publications](#publications)
-8. [Copyright and License](#copyright-and-license)
-9. [Authors](#authors)
-10. [Acknowledgments](#acknowledgments)
+1. [Directory Structure](#directory-structure)
+2. [Learning Objectives & Key Concepts](#learning-objectives--key-concepts)
+3. [Dependencies & Requirements](#dependencies--requirements)
+4. [Quick Start Code Snippets](#quick-start-code-snippets)
+5. [Data Format Guide](#data-format-guide)
+6. [API & Integration References](#api--integration-references)
+7. [Configuration & Customization](#configuration--customization)
+8. [Common Issues & Troubleshooting](#common-issues--troubleshooting)
+9. [Real-World Use Cases](#real-world-use-cases)
+10. [Integration with AI/ML Tools](#integration-with-aiml-tools)
+11. [Running the Tutorial](#running-the-tutorial)
+12. [Option 1: GitHub Codespaces (Recommended)](#option-1-GitHub-codespaces-recommended)
+13. [Option 2: Docker](#0ption-2-docker)
+14. [Option 3: Jetstream2](#option-3-jetstream2)
+15. [APPENDIX: Prerequities for Docker](#appendix-prerequities-for-docker)
+16. [Community and Resources](#community-and-resources)
+17. [Publications](#publications)
+18. [Copyright and License](#copyright-and-license)
+19. [Authors](#authors)
+20. [Acknowledgments](#acknowledgments)
 
 
 ## Running the Tutorial
